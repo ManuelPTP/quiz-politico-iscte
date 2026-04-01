@@ -302,7 +302,7 @@
   <div class="intro" id="intro-screen">
     <span class="intro-icon">🗳️</span>
     <h2>Bem-vindo ao quiz</h2>
-    <p>Responde a 10 perguntas sobre temas que te afetam diretamente — habitação, clima, Europa, impostos e mais. No final, descobres qual líder político português pensa mais parecido a ti.</p>
+    <p>Responde a 15 perguntas sobre temas que te afetam diretamente — habitação, clima, Europa, impostos e mais. No final, descobres qual líder político português pensa mais parecido a ti.</p>
     <button class="start-btn" onclick="startQuiz()">Começar o quiz →</button>
   </div>
 
@@ -329,91 +329,136 @@ const questions = [
   {
     text: "Como deve o Estado lidar com os serviços públicos como saúde e educação?",
     options: [
-      { text: "Investir muito mais, mesmo que isso implique mais impostos", scores: { costa: 2, catarina: 3, livre: 1 } },
-      { text: "Melhorar a eficiência sem aumentar a despesa pública", scores: { montenegro: 2, paulo: 1 } },
-      { text: "Abrir mais espaço ao setor privado para competir com o público", scores: { paulo: 3, montenegro: 1 } },
-      { text: "Privatizar progressivamente e reduzir o papel do Estado", scores: { ventura: 1, paulo: 2 } }
+      { text: "Investir muito mais, mesmo que isso implique mais impostos", scores: { catarina: 3, pedronuno: 2, livre: 2, carneiro: 1 } },
+      { text: "Melhorar a eficiência sem aumentar significativamente a despesa", scores: { montenegro: 2, passos: 2, paulo: 1 } },
+      { text: "Abrir mais espaço ao setor privado para competir com o público", scores: { paulo: 3, passos: 2, montenegro: 1 } },
+      { text: "Privatizar progressivamente e reduzir o papel do Estado", scores: { passos: 3, paulo: 2 } }
     ]
   },
   {
     text: "Qual deve ser a política de Portugal face à imigração?",
     options: [
-      { text: "Acolher ativamente, com programas de integração robustos", scores: { catarina: 3, livre: 3, costa: 1 } },
-      { text: "Aceitar quem contribui para a economia, com regras claras", scores: { costa: 2, montenegro: 2 } },
-      { text: "Controlar e reduzir significativamente a imigração", scores: { ventura: 3, montenegro: 1 } },
-      { text: "Suspender a imigração até resolver problemas internos", scores: { ventura: 3 } }
+      { text: "Acolher ativamente, com programas de integração robustos", scores: { catarina: 3, livre: 3, carneiro: 2 } },
+      { text: "Aceitar quem contribui para a economia, com regras claras", scores: { costa: 2, pedronuno: 2, montenegro: 1, carneiro: 1 } },
+      { text: "Controlar e reduzir significativamente a imigração", scores: { ventura: 3, rita: 3, montenegro: 1 } },
+      { text: "Suspender a imigração e repatriar quem entrou ilegalmente", scores: { ventura: 3, rita: 3 } }
     ]
   },
   {
     text: "Como te posicionas em relação à crise climática?",
     options: [
       { text: "É a prioridade máxima — precisamos de mudanças radicais e urgentes", scores: { livre: 3, catarina: 2 } },
-      { text: "É importante, mas as soluções têm de ser compatíveis com o crescimento económico", scores: { costa: 2, montenegro: 1 } },
-      { text: "Devemos agir, mas sem prejudicar a competitividade das empresas", scores: { paulo: 2, montenegro: 2 } },
-      { text: "O alarmismo climático é exagerado — a economia vem primeiro", scores: { ventura: 3 } }
+      { text: "É importante, mas compatível com crescimento económico", scores: { costa: 2, pedronuno: 1, carneiro: 1, montenegro: 1 } },
+      { text: "Devemos agir, mas sem prejudicar as empresas e os empregos", scores: { paulo: 2, passos: 2, montenegro: 2 } },
+      { text: "O alarmismo climático é exagerado — a economia vem primeiro", scores: { ventura: 3, rita: 2 } }
     ]
   },
   {
     text: "Qual a tua posição sobre os impostos sobre grandes fortunas e empresas?",
     options: [
-      { text: "Devem aumentar substancialmente para financiar serviços públicos", scores: { catarina: 3, livre: 2 } },
-      { text: "Devem ser moderados para manter o investimento no país", scores: { costa: 2 } },
-      { text: "Devem baixar para atrair mais empresas e gerar emprego", scores: { paulo: 3, montenegro: 2 } },
-      { text: "Impostos altos sufocam a economia — cortar em tudo", scores: { ventura: 2, paulo: 1 } }
+      { text: "Devem aumentar substancialmente para financiar serviços públicos", scores: { catarina: 3, pedronuno: 2, livre: 2 } },
+      { text: "Devem ser moderados para não afugentar investimento", scores: { costa: 2, carneiro: 2 } },
+      { text: "Devem baixar para atrair mais empresas e gerar emprego", scores: { paulo: 3, passos: 3, montenegro: 2 } },
+      { text: "Impostos altos sufocam a economia — cortar tudo o que for possível", scores: { ventura: 2, passos: 1 } }
     ]
   },
   {
     text: "Portugal deve aprofundar a integração europeia?",
     options: [
-      { text: "Sim, incluindo ceder mais soberania a uma Europa federal", scores: { livre: 3, costa: 1 } },
-      { text: "Sim, mas mantendo soberania nacional nos temas essenciais", scores: { costa: 2, catarina: 1, montenegro: 1 } },
-      { text: "A Europa está bem como está — nem mais nem menos", scores: { montenegro: 2, paulo: 1 } },
-      { text: "A UE é prejudicial para Portugal — devemos recuperar soberania", scores: { ventura: 3 } }
+      { text: "Sim, incluindo ceder mais soberania a uma Europa federal", scores: { livre: 3, paulo: 2, costa: 1 } },
+      { text: "Sim, mas mantendo soberania nacional nos temas essenciais", scores: { costa: 2, carneiro: 2, pedronuno: 1, montenegro: 1 } },
+      { text: "A Europa está bem como está — nem mais nem menos", scores: { montenegro: 2, passos: 1 } },
+      { text: "A UE é prejudicial para Portugal — devemos recuperar soberania", scores: { ventura: 3, rita: 2 } }
     ]
   },
   {
     text: "Como deve o Estado apoiar os jovens na habitação?",
     options: [
-      { text: "Com habitação pública em larga escala e controlo de rendas", scores: { catarina: 3, livre: 2 } },
-      { text: "Com apoios ao arrendamento e incentivos à construção", scores: { costa: 2, montenegro: 1 } },
-      { text: "Liberalizando o mercado para baixar os preços pela concorrência", scores: { paulo: 3 } },
-      { text: "Expulsando os imigrantes que ocupam as casas dos portugueses", scores: { ventura: 3 } }
+      { text: "Com habitação pública em larga escala e controlo de rendas", scores: { catarina: 3, pedronuno: 3, livre: 2 } },
+      { text: "Com apoios ao arrendamento e incentivos à construção privada", scores: { costa: 2, carneiro: 2, montenegro: 1 } },
+      { text: "Liberalizando o mercado — a concorrência baixa os preços", scores: { paulo: 3, passos: 3 } },
+      { text: "Reduzindo a imigração para libertar casas para os portugueses", scores: { ventura: 3, rita: 3 } }
     ]
   },
   {
     text: "Qual é a tua posição sobre a descriminalização ou legalização de drogas?",
     options: [
       { text: "Legalização total, tratando o consumo como questão de saúde pública", scores: { livre: 3, catarina: 1 } },
-      { text: "Manter a descriminalização atual, apostando na prevenção", scores: { costa: 2, catarina: 2 } },
-      { text: "Apertar a legislação — tolerância zero com o tráfico", scores: { montenegro: 2, paulo: 1 } },
-      { text: "Criminalizar o consumo e ter mão dura com os traficantes", scores: { ventura: 3 } }
+      { text: "Manter a descriminalização atual, apostando na prevenção e tratamento", scores: { costa: 2, carneiro: 2, catarina: 2, pedronuno: 1 } },
+      { text: "Apertar a legislação — tolerância zero com o tráfico", scores: { montenegro: 2, passos: 2, paulo: 1 } },
+      { text: "Criminalizar o consumo e ter mão dura com os traficantes", scores: { ventura: 3, rita: 3 } }
     ]
   },
   {
     text: "Como avalias o papel dos sindicatos e da negociação coletiva?",
     options: [
-      { text: "Fundamental — os trabalhadores precisam de mais poder negocial", scores: { catarina: 3, livre: 2 } },
-      { text: "Importante, mas deve equilibrar-se com as necessidades das empresas", scores: { costa: 2 } },
-      { text: "Os sindicatos têm demasiado poder e prejudicam a economia", scores: { paulo: 2, montenegro: 1 } },
-      { text: "Os sindicatos são uma relíquia do passado e devem ter menos influência", scores: { ventura: 2, paulo: 1 } }
+      { text: "Fundamental — os trabalhadores precisam de mais poder negocial", scores: { catarina: 3, pedronuno: 3, livre: 2 } },
+      { text: "Importante, mas deve equilibrar-se com as necessidades das empresas", scores: { costa: 2, carneiro: 2 } },
+      { text: "Os sindicatos têm demasiado poder e travam a modernização", scores: { paulo: 2, passos: 2, montenegro: 1 } },
+      { text: "Os sindicatos são instrumentalizados pela esquerda — menos poder para eles", scores: { ventura: 2, rita: 2, passos: 1 } }
     ]
   },
   {
     text: "Como deve Portugal lidar com a corrupção no sistema político?",
     options: [
-      { text: "Com reforma profunda das instituições e mais transparência", scores: { livre: 3, catarina: 2 } },
-      { text: "Com leis mais duras e um sistema judicial mais eficaz", scores: { costa: 1, montenegro: 2 } },
-      { text: "O problema está nos partidos do sistema — precisamos de uma alternativa", scores: { ventura: 2, paulo: 1 } },
-      { text: "Os políticos são todos iguais — o sistema está podre na raiz", scores: { ventura: 3 } }
+      { text: "Com reforma profunda das instituições e mais transparência", scores: { livre: 3, catarina: 2, pedronuno: 1 } },
+      { text: "Com leis mais duras e um sistema judicial mais eficaz e rápido", scores: { costa: 1, carneiro: 2, montenegro: 2 } },
+      { text: "Acabando com privilégios dos partidos do sistema", scores: { ventura: 2, rita: 2, passos: 1 } },
+      { text: "Os políticos são todos iguais — o sistema está podre na raiz", scores: { ventura: 3, rita: 2 } }
     ]
   },
   {
     text: "Qual deve ser o papel de Portugal no conflito na Ucrânia?",
     options: [
-      { text: "Apoio total à Ucrânia, incluindo envio de armas e sanções à Rússia", scores: { livre: 2, catarina: 2, costa: 1 } },
-      { text: "Apoio diplomático e humanitário, dentro das alianças ocidentais", scores: { costa: 2, montenegro: 2 } },
-      { text: "Neutralidade — Portugal não deve envolver-se em conflitos externos", scores: { paulo: 1, ventura: 1 } },
-      { text: "Dialogar com a Rússia — a NATO provocou este conflito", scores: { ventura: 2 } }
+      { text: "Apoio total à Ucrânia, incluindo envio de mais armas e sanções à Rússia", scores: { livre: 3, catarina: 2, paulo: 1 } },
+      { text: "Apoio diplomático e humanitário dentro das alianças ocidentais", scores: { costa: 2, carneiro: 2, montenegro: 2, passos: 1 } },
+      { text: "Neutralidade — Portugal não deve envolver-se em conflitos externos", scores: { pedronuno: 1, ventura: 1 } },
+      { text: "Dialogar com a Rússia — o Ocidente provocou este conflito", scores: { ventura: 2, rita: 1 } }
+    ]
+  },
+  {
+    text: "Qual deve ser a idade mínima de reforma em Portugal?",
+    options: [
+      { text: "Deve baixar — quem trabalhou toda a vida merece reformar-se mais cedo", scores: { catarina: 3, pedronuno: 3, carneiro: 1 } },
+      { text: "Manter os 66 anos com flexibilidade para quem fez carreiras longas", scores: { costa: 2, carneiro: 2, montenegro: 1 } },
+      { text: "Deve subir gradualmente para garantir a sustentabilidade do sistema", scores: { passos: 3, paulo: 2, montenegro: 2 } },
+      { text: "Privatizar a segurança social e deixar cada um gerir a sua reforma", scores: { passos: 2, paulo: 1 } }
+    ]
+  },
+  {
+    text: "Como deve Portugal lidar com a dívida pública?",
+    options: [
+      { text: "Investir agora mesmo com dívida — o crescimento paga a conta", scores: { pedronuno: 3, catarina: 2, livre: 1 } },
+      { text: "Reduzir a dívida progressivamente sem cortar serviços públicos", scores: { costa: 3, carneiro: 2 } },
+      { text: "A redução da dívida é a prioridade — disciplina orçamental acima de tudo", scores: { passos: 3, paulo: 2, montenegro: 2 } },
+      { text: "A dívida não interessa — o que importa é pôr os portugueses a trabalhar", scores: { ventura: 2, rita: 1 } }
+    ]
+  },
+  {
+    text: "Qual é a tua posição sobre o aborto e os direitos reprodutivos?",
+    options: [
+      { text: "Ampliar os direitos — mais semanas, mais acesso, sem barreiras", scores: { livre: 3, catarina: 2, pedronuno: 1 } },
+      { text: "Manter a lei atual — funciona e está equilibrada", scores: { costa: 2, carneiro: 2, montenegro: 1 } },
+      { text: "Restringir o acesso ao aborto — há limites que devem ser respeitados", scores: { passos: 2, paulo: 1 } },
+      { text: "Proibir o aborto — é uma questão de vida e de valores cristãos", scores: { ventura: 2, rita: 3 } }
+    ]
+  },
+  {
+    text: "Como deve o Estado apoiar as famílias com filhos?",
+    options: [
+      { text: "Com creches públicas gratuitas, licenças alargadas e abonos reforçados", scores: { catarina: 3, pedronuno: 3, livre: 2, carneiro: 1 } },
+      { text: "Com benefícios fiscais e apoios ao arrendamento para famílias numerosas", scores: { costa: 2, carneiro: 2, montenegro: 1 } },
+      { text: "Com deduções fiscais e menos burocracia — o Estado deve intrometer-se menos", scores: { passos: 2, paulo: 2 } },
+      { text: "Priorizando as famílias portuguesas tradicionais nos apoios sociais", scores: { ventura: 3, rita: 3 } }
+    ]
+  },
+  {
+    text: "Qual é a tua visão sobre a relação entre o Estado e a Igreja Católica?",
+    options: [
+      { text: "Separação total — o Estado deve ser laico e neutro em matéria religiosa", scores: { livre: 3, catarina: 2, pedronuno: 1 } },
+      { text: "Respeitar a Concordata mas sem privilégios especiais para nenhuma religião", scores: { costa: 2, carneiro: 2, paulo: 1, montenegro: 1 } },
+      { text: "A Igreja tem um papel histórico e social que o Estado deve reconhecer", scores: { passos: 2, montenegro: 1 } },
+      { text: "Os valores cristãos são a base da identidade portuguesa e devem ser protegidos", scores: { ventura: 3, rita: 3 } }
     ]
   }
 ];
@@ -424,15 +469,25 @@ const profiles = {
     tagline: "\"A política tem de estar do lado de quem trabalha.\"",
     desc: "Acreditas numa esquerda exigente e sem concessões. Defendes serviços públicos fortes, direitos laborais alargados e uma resposta radical à crise climática. Para ti, as desigualdades são a principal ameaça à democracia."
   },
+  pedronuno: {
+    name: "Pedro Nuno Santos", party: "Partido Socialista", emoji: "✋",
+    tagline: "\"Não tenho medo de ser de esquerda.\"",
+    desc: "Tens um perfil de esquerda dentro do socialismo. Acreditas num Estado interventivo, em empresas públicas fortes e numa política económica que coloque o emprego e os salários à frente da austeridade. A ruptura com o status quo atrai-te."
+  },
+  carneiro: {
+    name: "José Luís Carneiro", party: "Partido Socialista", emoji: "🌹",
+    tagline: "\"O PS é o partido do povo português.\"",
+    desc: "Tens um perfil socialista moderado, ligado às causas sociais e à coesão territorial. Valorizas a proximidade com as comunidades, os serviços públicos e uma política externa de diálogo. Preferes a construção paciente à ruptura."
+  },
+  costa: {
+    name: "António Costa", party: "Partido Socialista", emoji: "⚖️",
+    tagline: "\"Geringonça ou não, o resultado é o que conta.\"",
+    desc: "Preferes soluções pragmáticas a ideologias rígidas. Acreditas num Estado social sólido, mas com sentido de responsabilidade orçamental. Valorizas o diálogo e a estabilidade como condições para o progresso."
+  },
   livre: {
     name: "Rui Tavares", party: "Livre", emoji: "🌿",
     tagline: "\"Uma Europa mais justa começa em Portugal.\"",
     desc: "Tens um perfil progressista e europeísta. Valorizas os direitos civis, a sustentabilidade ambiental e uma democracia mais participativa. Acreditas que Portugal pode liderar transformações positivas dentro da Europa."
-  },
-  costa: {
-    name: "António Costa", party: "Partido Socialista", emoji: "🌹",
-    tagline: "\"Geringonça ou não, o resultado é o que conta.\"",
-    desc: "Preferes soluções pragmáticas a ideologias rígidas. Acreditas num Estado social sólido, mas com sentido de responsabilidade orçamental. Valorizas o diálogo e a estabilidade como condições para o progresso."
   },
   montenegro: {
     name: "Luís Montenegro", party: "PSD", emoji: "🏛️",
@@ -444,10 +499,20 @@ const profiles = {
     tagline: "\"A direita portuguesa tem de ser europeia e liberal.\"",
     desc: "Tens uma visão liberal e pró-europeia. Defendes a redução da carga fiscal, a abertura ao investimento privado e uma política externa alinhada com os valores ocidentais. Acreditas que o crescimento económico beneficia toda a sociedade."
   },
+  passos: {
+    name: "Pedro Passos Coelho", party: "PSD", emoji: "📉",
+    tagline: "\"Portugal não pode gastar mais do que aquilo que tem.\"",
+    desc: "Tens um perfil de direita liberal e orçamentalmente rigoroso. Acreditas que a redução do Estado, a disciplina fiscal e as reformas estruturais são o caminho para a prosperidade. A competitividade económica é o teu valor central."
+  },
   ventura: {
     name: "André Ventura", party: "Chega", emoji: "🔒",
     tagline: "\"Chega de impunidade, chega de corrupção.\"",
     desc: "Tens um perfil de direita populista. Desconfias das elites políticas e das instituições tradicionais. Priorizas a segurança, o controlo da imigração e uma visão de Portugal para os portugueses, com mão dura contra a corrupção e o crime."
+  },
+  rita: {
+    name: "Rita Matias", party: "Chega", emoji: "🛡️",
+    tagline: "\"A família e a nação são os pilares de Portugal.\"",
+    desc: "Tens um perfil de direita conservadora e identitária. Defendes os valores tradicionais, a identidade nacional e cristã de Portugal, e uma política muito restritiva em matéria de imigração. A ordem, a família e a soberania são as tuas prioridades."
   }
 };
 
@@ -462,7 +527,7 @@ function startQuiz() {
 function renderQuestion() {
   const q = questions[current];
   const pct = Math.round((current / questions.length) * 100);
-  document.getElementById('q-counter').textContent = `Pergunta ${current + 1} de ${questions.length}`;
+  document.getElementById('q-counter').textContent = `Pergunta ${current + 1} de 15`;
   document.getElementById('q-pct').textContent = pct + '%';
   document.getElementById('progress-fill').style.width = pct + '%';
   document.getElementById('q-text').textContent = q.text;
@@ -497,7 +562,7 @@ function nextQuestion() {
 }
 
 function showResult() {
-  const totals = { catarina: 0, livre: 0, costa: 0, montenegro: 0, paulo: 0, ventura: 0 };
+  const totals = { catarina: 0, pedronuno: 0, carneiro: 0, costa: 0, livre: 0, montenegro: 0, paulo: 0, passos: 0, ventura: 0, rita: 0 };
   answers.forEach((ans, qi) => {
     const scores = questions[qi].options[ans].scores || {};
     for (const k in scores) totals[k] += scores[k];
