@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Qual é o teu perfil político? — ISCTE Ciência Política</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F5F2EB;
+    --card: #FDFAF4;
+    --ink: #1A1814;
+    --ink2: #5A5650;
+    --ink3: #9A9590;
+    --accent: #C8392B;
+    --accent2: #E8A020;
+    --border: rgba(26,24,20,0.12);
+    --border2: rgba(26,24,20,0.22);
+    --r: 14px;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem 4rem;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    max-width: 600px;
+  }
+
+  .iscte-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink2);
+    border: 0.5px solid var(--border2);
+    border-radius: 100px;
+    padding: 5px 14px;
+    margin-bottom: 1.5rem;
+  }
+
+  .iscte-badge span { color: var(--accent); font-weight: 700; }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 6vw, 42px);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 0.75rem;
+  }
+
+  h1 em { color: var(--accent); font-style: italic; }
+
+  .subtitle {
+    font-size: 15px;
+    color: var(--ink2);
+    line-height: 1.7;
+  }
+
+  .card {
+    background: var(--card);
+    border: 0.5px solid var(--border);
+    border-radius: var(--r);
+    padding: 2rem;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 2px 24px rgba(26,24,20,0.06);
+  }
+
+  /* Progress */
+  .progress-wrap { margin-bottom: 1.75rem; }
+  .progress-meta { display: flex; justify-content: space-between; font-size: 12px; color: var(--ink3); margin-bottom: 8px; letter-spacing: 0.04em; text-transform: uppercase; }
+  .progress-track { height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 3px; background: var(--accent); border-radius: 2px; transition: width 0.5s cubic-bezier(.4,0,.2,1); }
+
+  /* Question */
+  .q-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(17px, 3vw, 21px);
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+
+  /* Options */
+  .options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 1.75rem; }
+
+  .opt {
+    background: transparent;
+    border: 0.5px solid var(--border2);
+    border-radius: 10px;
+    padding: 14px 18px;
+    text-align: left;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    color: var(--ink);
+    cursor: pointer;
+    transition: all 0.18s ease;
+    line-height: 1.5;
+    position: relative;
+    padding-left: 44px;
+  }
+
+  .opt::before {
+    content: '';
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border2);
+    transition: all 0.18s ease;
+  }
+
+  .opt:hover { background: rgba(26,24,20,0.04); border-color: var(--ink); }
+
+  .opt.selected {
+    background: rgba(200,57,43,0.06);
+    border-color: var(--accent);
+    border-width: 1.5px;
+  }
+
+  .opt.selected::before {
+    background: var(--accent);
+    border-color: var(--accent);
+    box-shadow: inset 0 0 0 3px var(--card);
+  }
+
+  /* Button */
+  .next-btn {
+    width: 100%;
+    padding: 14px;
+    background: var(--ink);
+    color: var(--card);
+    border: none;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    opacity: 0.3;
+    pointer-events: none;
+    letter-spacing: 0.01em;
+  }
+
+  .next-btn.active { opacity: 1; pointer-events: all; }
+  .next-btn.active:hover { background: #333; transform: translateY(-1px); }
+
+  /* Intro */
+  .intro { text-align: center; }
+  .intro-icon { font-size: 52px; margin-bottom: 1.25rem; display: block; }
+  .intro h2 { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; margin-bottom: 0.75rem; }
+  .intro p { font-size: 15px; color: var(--ink2); line-height: 1.7; margin-bottom: 1.75rem; }
+
+  .start-btn {
+    width: 100%;
+    padding: 14px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    letter-spacing: 0.01em;
+  }
+
+  .start-btn:hover { background: #a82e22; transform: translateY(-1px); }
+
+  /* Result */
+  .result { text-align: center; }
+  .result-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 2px solid var(--border2);
+    margin: 0 auto 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 38px;
+    background: var(--bg);
+  }
+
+  .result-tag {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    margin-bottom: 6px;
+  }
+
+  .result-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+
+  .result-party {
+    display: inline-block;
+    font-size: 12px;
+    color: var(--accent);
+    border: 0.5px solid var(--accent);
+    border-radius: 100px;
+    padding: 4px 14px;
+    margin-bottom: 1.25rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+
+  .result-desc {
+    font-size: 15px;
+    color: var(--ink2);
+    line-height: 1.8;
+    text-align: left;
+    margin-bottom: 1rem;
+  }
+
+  .result-tagline {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-style: italic;
+    color: var(--ink3);
+    margin-bottom: 1.75rem;
+    text-align: left;
+    padding-left: 1rem;
+    border-left: 2px solid var(--accent);
+  }
+
+  /* Score bars */
+  .scores { margin-bottom: 2rem; text-align: left; }
+  .scores-title { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink3); margin-bottom: 1rem; }
+  .score-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .score-name { font-size: 13px; color: var(--ink2); min-width: 120px; }
+  .score-track { flex: 1; height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; }
+  .score-fill { height: 5px; background: var(--ink); border-radius: 3px; transition: width 0.8s cubic-bezier(.4,0,.2,1); }
+  .score-fill.top { background: var(--accent); }
+  .score-pct { font-size: 12px; color: var(--ink3); min-width: 32px; text-align: right; }
+
+  .restart-btn {
+    width: 100%;
+    padding: 12px;
+    background: transparent;
+    color: var(--ink2);
+    border: 0.5px solid var(--border2);
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+  }
+
+  .restart-btn:hover { background: rgba(26,24,20,0.05); }
+
+  footer {
+    margin-top: 2rem;
+    font-size: 12px;
+    color: var(--ink3);
+    text-align: center;
+    max-width: 400px;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 480px) {
+    .card { padding: 1.5rem; }
+    .score-name { min-width: 90px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="iscte-badge"><span>ISCTE</span> Núcleo de Ciência Política</div>
+  <h1>Qual é o teu perfil <em>político</em>?</h1>
+  <p class="subtitle">Descobre com que líder português tens mais em comum — em 10 perguntas.</p>
+</header>
+
+<div class="card" id="card">
+  <div class="intro" id="intro-screen">
+    <span class="intro-icon">🗳️</span>
+    <h2>Bem-vindo ao quiz</h2>
+    <p>Responde a 10 perguntas sobre temas que te afetam diretamente — habitação, clima, Europa, impostos e mais. No final, descobres qual líder político português pensa mais parecido a ti.</p>
+    <button class="start-btn" onclick="startQuiz()">Começar o quiz →</button>
+  </div>
+
+  <div id="quiz-screen" style="display:none">
+    <div class="progress-wrap">
+      <div class="progress-meta">
+        <span id="q-counter">Pergunta 1 de 10</span>
+        <span id="q-pct">0%</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="q-text" id="q-text"></div>
+    <div class="options" id="options"></div>
+    <button class="next-btn" id="next-btn" onclick="nextQuestion()">Continuar →</button>
+  </div>
+
+  <div id="result-screen" style="display:none"></div>
+</div>
+
+<footer>Quiz desenvolvido pelo Núcleo de Alunos de Ciência Política do ISCTE para o Open Day. As associações a líderes são ilustrativas e têm fins educativos.</footer>
+
+<script>
+const questions = [
+  {
+    text: "Como deve o Estado lidar com os serviços públicos como saúde e educação?",
+    options: [
+      { text: "Investir muito mais, mesmo que isso implique mais impostos", scores: { costa: 2, catarina: 3, livre: 1 } },
+      { text: "Melhorar a eficiência sem aumentar a despesa pública", scores: { montenegro: 2, paulo: 1 } },
+      { text: "Abrir mais espaço ao setor privado para competir com o público", scores: { paulo: 3, montenegro: 1 } },
+      { text: "Privatizar progressivamente e reduzir o papel do Estado", scores: { ventura: 1, paulo: 2 } }
+    ]
+  },
+  {
+    text: "Qual deve ser a política de Portugal face à imigração?",
+    options: [
+      { text: "Acolher ativamente, com programas de integração robustos", scores: { catarina: 3, livre: 3, costa: 1 } },
+      { text: "Aceitar quem contribui para a economia, com regras claras", scores: { costa: 2, montenegro: 2 } },
+      { text: "Controlar e reduzir significativamente a imigração", scores: { ventura: 3, montenegro: 1 } },
+      { text: "Suspender a imigração até resolver problemas internos", scores: { ventura: 3 } }
+    ]
+  },
+  {
+    text: "Como te posicionas em relação à crise climática?",
+    options: [
+      { text: "É a prioridade máxima — precisamos de mudanças radicais e urgentes", scores: { livre: 3, catarina: 2 } },
+      { text: "É importante, mas as soluções têm de ser compatíveis com o crescimento económico", scores: { costa: 2, montenegro: 1 } },
+      { text: "Devemos agir, mas sem prejudicar a competitividade das empresas", scores: { paulo: 2, montenegro: 2 } },
+      { text: "O alarmismo climático é exagerado — a economia vem primeiro", scores: { ventura: 3 } }
+    ]
+  },
+  {
+    text: "Qual a tua posição sobre os impostos sobre grandes fortunas e empresas?",
+    options: [
+      { text: "Devem aumentar substancialmente para financiar serviços públicos", scores: { catarina: 3, livre: 2 } },
+      { text: "Devem ser moderados para manter o investimento no país", scores: { costa: 2 } },
+      { text: "Devem baixar para atrair mais empresas e gerar emprego", scores: { paulo: 3, montenegro: 2 } },
+      { text: "Impostos altos sufocam a economia — cortar em tudo", scores: { ventura: 2, paulo: 1 } }
+    ]
+  },
+  {
+    text: "Portugal deve aprofundar a integração europeia?",
+    options: [
+      { text: "Sim, incluindo ceder mais soberania a uma Europa federal", scores: { livre: 3, costa: 1 } },
+      { text: "Sim, mas mantendo soberania nacional nos temas essenciais", scores: { costa: 2, catarina: 1, montenegro: 1 } },
+      { text: "A Europa está bem como está — nem mais nem menos", scores: { montenegro: 2, paulo: 1 } },
+      { text: "A UE é prejudicial para Portugal — devemos recuperar soberania", scores: { ventura: 3 } }
+    ]
+  },
+  {
+    text: "Como deve o Estado apoiar os jovens na habitação?",
+    options: [
+      { text: "Com habitação pública em larga escala e controlo de rendas", scores: { catarina: 3, livre: 2 } },
+      { text: "Com apoios ao arrendamento e incentivos à construção", scores: { costa: 2, montenegro: 1 } },
+      { text: "Liberalizando o mercado para baixar os preços pela concorrência", scores: { paulo: 3 } },
+      { text: "Expulsando os imigrantes que ocupam as casas dos portugueses", scores: { ventura: 3 } }
+    ]
+  },
+  {
+    text: "Qual é a tua posição sobre a descriminalização ou legalização de drogas?",
+    options: [
+      { text: "Legalização total, tratando o consumo como questão de saúde pública", scores: { livre: 3, catarina: 1 } },
+      { text: "Manter a descriminalização atual, apostando na prevenção", scores: { costa: 2, catarina: 2 } },
+      { text: "Apertar a legislação — tolerância zero com o tráfico", scores: { montenegro: 2, paulo: 1 } },
+      { text: "Criminalizar o consumo e ter mão dura com os traficantes", scores: { ventura: 3 } }
+    ]
+  },
+  {
+    text: "Como avalias o papel dos sindicatos e da negociação coletiva?",
+    options: [
+      { text: "Fundamental — os trabalhadores precisam de mais poder negocial", scores: { catarina: 3, livre: 2 } },
+      { text: "Importante, mas deve equilibrar-se com as necessidades das empresas", scores: { costa: 2 } },
+      { text: "Os sindicatos têm demasiado poder e prejudicam a economia", scores: { paulo: 2, montenegro: 1 } },
+      { text: "Os sindicatos são uma relíquia do passado e devem ter menos influência", scores: { ventura: 2, paulo: 1 } }
+    ]
+  },
+  {
+    text: "Como deve Portugal lidar com a corrupção no sistema político?",
+    options: [
+      { text: "Com reforma profunda das instituições e mais transparência", scores: { livre: 3, catarina: 2 } },
+      { text: "Com leis mais duras e um sistema judicial mais eficaz", scores: { costa: 1, montenegro: 2 } },
+      { text: "O problema está nos partidos do sistema — precisamos de uma alternativa", scores: { ventura: 2, paulo: 1 } },
+      { text: "Os políticos são todos iguais — o sistema está podre na raiz", scores: { ventura: 3 } }
+    ]
+  },
+  {
+    text: "Qual deve ser o papel de Portugal no conflito na Ucrânia?",
+    options: [
+      { text: "Apoio total à Ucrânia, incluindo envio de armas e sanções à Rússia", scores: { livre: 2, catarina: 2, costa: 1 } },
+      { text: "Apoio diplomático e humanitário, dentro das alianças ocidentais", scores: { costa: 2, montenegro: 2 } },
+      { text: "Neutralidade — Portugal não deve envolver-se em conflitos externos", scores: { paulo: 1, ventura: 1 } },
+      { text: "Dialogar com a Rússia — a NATO provocou este conflito", scores: { ventura: 2 } }
+    ]
+  }
+];
+
+const profiles = {
+  catarina: {
+    name: "Catarina Martins", party: "Bloco de Esquerda", emoji: "✊",
+    tagline: "\"A política tem de estar do lado de quem trabalha.\"",
+    desc: "Acreditas numa esquerda exigente e sem concessões. Defendes serviços públicos fortes, direitos laborais alargados e uma resposta radical à crise climática. Para ti, as desigualdades são a principal ameaça à democracia."
+  },
+  livre: {
+    name: "Rui Tavares", party: "Livre", emoji: "🌿",
+    tagline: "\"Uma Europa mais justa começa em Portugal.\"",
+    desc: "Tens um perfil progressista e europeísta. Valorizas os direitos civis, a sustentabilidade ambiental e uma democracia mais participativa. Acreditas que Portugal pode liderar transformações positivas dentro da Europa."
+  },
+  costa: {
+    name: "António Costa", party: "Partido Socialista", emoji: "🌹",
+    tagline: "\"Geringonça ou não, o resultado é o que conta.\"",
+    desc: "Preferes soluções pragmáticas a ideologias rígidas. Acreditas num Estado social sólido, mas com sentido de responsabilidade orçamental. Valorizas o diálogo e a estabilidade como condições para o progresso."
+  },
+  montenegro: {
+    name: "Luís Montenegro", party: "PSD", emoji: "🏛️",
+    tagline: "\"Um Estado mais eficiente serve melhor os cidadãos.\"",
+    desc: "Tens um perfil de centro-direita moderado. Acreditas na economia de mercado, na responsabilidade fiscal e num Estado que regula sem sufocar. A estabilidade institucional e a integração europeia são valores que defendes."
+  },
+  paulo: {
+    name: "Paulo Rangel", party: "PSD / PPE", emoji: "🇪🇺",
+    tagline: "\"A direita portuguesa tem de ser europeia e liberal.\"",
+    desc: "Tens uma visão liberal e pró-europeia. Defendes a redução da carga fiscal, a abertura ao investimento privado e uma política externa alinhada com os valores ocidentais. Acreditas que o crescimento económico beneficia toda a sociedade."
+  },
+  ventura: {
+    name: "André Ventura", party: "Chega", emoji: "🔒",
+    tagline: "\"Chega de impunidade, chega de corrupção.\"",
+    desc: "Tens um perfil de direita populista. Desconfias das elites políticas e das instituições tradicionais. Priorizas a segurança, o controlo da imigração e uma visão de Portugal para os portugueses, com mão dura contra a corrupção e o crime."
+  }
+};
+
+let current = 0, answers = [], selected = null;
+
+function startQuiz() {
+  document.getElementById('intro-screen').style.display = 'none';
+  document.getElementById('quiz-screen').style.display = 'block';
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = questions[current];
+  const pct = Math.round((current / questions.length) * 100);
+  document.getElementById('q-counter').textContent = `Pergunta ${current + 1} de ${questions.length}`;
+  document.getElementById('q-pct').textContent = pct + '%';
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('q-text').textContent = q.text;
+  const opts = document.getElementById('options');
+  opts.innerHTML = '';
+  selected = null;
+  document.getElementById('next-btn').classList.remove('active');
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'opt';
+    btn.textContent = opt.text;
+    btn.onclick = () => selectOption(i);
+    opts.appendChild(btn);
+  });
+}
+
+function selectOption(i) {
+  selected = i;
+  document.querySelectorAll('.opt').forEach((b, idx) => b.classList.toggle('selected', idx === i));
+  document.getElementById('next-btn').classList.add('active');
+}
+
+function nextQuestion() {
+  if (selected === null) return;
+  answers.push(selected);
+  current++;
+  if (current < questions.length) {
+    renderQuestion();
+  } else {
+    showResult();
+  }
+}
+
+function showResult() {
+  const totals = { catarina: 0, livre: 0, costa: 0, montenegro: 0, paulo: 0, ventura: 0 };
+  answers.forEach((ans, qi) => {
+    const scores = questions[qi].options[ans].scores || {};
+    for (const k in scores) totals[k] += scores[k];
+  });
+  const sorted = Object.entries(totals).sort((a, b) => b[1] - a[1]);
+  const winner = sorted[0][0];
+  const maxScore = sorted[0][1];
+  const p = profiles[winner];
+
+  document.getElementById('quiz-screen').style.display = 'none';
+  const rs = document.getElementById('result-screen');
+  rs.style.display = 'block';
+
+  const barsHtml = sorted.map(([k, v], i) => {
+    const pct = maxScore > 0 ? Math.round((v / maxScore) * 100) : 0;
+    return `<div class="score-row">
+      <span class="score-name">${profiles[k].name.split(' ')[0]} ${profiles[k].name.split(' ').slice(-1)[0]}</span>
+      <div class="score-track"><div class="score-fill ${i === 0 ? 'top' : ''}" style="width:${pct}%"></div></div>
+      <span class="score-pct">${pct}%</span>
+    </div>`;
+  }).join('');
+
+  rs.innerHTML = `
+    <div class="result">
+      <div class="result-avatar">${p.emoji}</div>
+      <div class="result-tag">O teu perfil é próximo de</div>
+      <div class="result-name">${p.name}</div>
+      <div class="result-party">${p.party}</div>
+      <div class="result-desc">${p.desc}</div>
+      <div class="result-tagline">${p.tagline}</div>
+      <div class="scores">
+        <div class="scores-title">Comparação com todos os perfis</div>
+        ${barsHtml}
+      </div>
+      <button class="restart-btn" onclick="restartQuiz()">← Fazer novamente</button>
+    </div>`;
+}
+
+function restartQuiz() {
+  current = 0; answers = []; selected = null;
+  document.getElementById('result-screen').style.display = 'none';
+  document.getElementById('intro-screen').style.display = 'block';
+}
+</script>
+</body>
+</html>
